@@ -35,7 +35,7 @@ export default () => {
 
             </Container>
 
-            <h1>Oi, {name}</h1>
+            {/* <h1>Oi, {name}</h1> */}
 
             
         </BrowserRouter>
