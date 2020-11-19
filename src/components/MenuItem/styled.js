@@ -6,7 +6,7 @@ export const LinkArea = styled.a`
   align-items: center;
   width: 60px;
   height: 60px;
-  background-color: ${props => props.active ? "#c5dfc7" : "transparent"};
+  background-color: ${props => props.active ? "#d7a54d" : "transparent"};
   border-radius: 10px;
   margin-bottom: 10px;
 `;
