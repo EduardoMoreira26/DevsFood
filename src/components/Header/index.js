@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { 
   Container,
@@ -7,12 +7,35 @@ import {
 } from "./styled"
 
 
-export default () => {
+export default ({ search, onSearch }) => {
+  const [inputActive, setInputActive] = useState(search === '' ? false : true);
   
+  const handleInputFocus = () => {
+    setInputActive(true);
+  };
+
+  const handleInputBlur = () => {
+    if(search === '') {
+      setInputActive(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    onSearch(e.target.value);
+  }
+
   return (
    <Container>
      <Logo src='/assets/logo.png' />
-     <SearchInput type="text" placeholder="Digite um produto..." />
+     <SearchInput 
+      value={search}
+      onChange={handleChange}
+      type="text" 
+      placeholder="Digite um produto..." 
+      active={inputActive}
+      onFocus={handleInputFocus}
+      onBlur={handleInputBlur}
+      />
    </Container>
   );
 }
