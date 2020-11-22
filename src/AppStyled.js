@@ -19,4 +19,5 @@ export const Pagebody = styled.div`
   display: flex;
   background-color: #d7a54d;
   flex:1;
+  overflow-y: auto;
 `;
