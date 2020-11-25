@@ -15,7 +15,6 @@ import {
 
 export default ({ data }) => {
 
- 
 
   return (
    <Container>
