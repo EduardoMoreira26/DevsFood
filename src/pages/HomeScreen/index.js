@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
@@ -27,17 +28,24 @@ export default () => {
     const [totalPages, setTotalPages] = useState(0);
 
     const [activeCategory, setActiveCategory] = useState(0);
-    const [activePage, setActivePage] = useState(0);
+    const [activePage, setActivePage] = useState(1);
     const [activeSearch, setActiveSearch] = useState("");
 
     const getProducts = async () => {
-        const prods = await api.getProducts();
+        const prods = await api.getProducts(activeCategory, activePage, activeSearch);
         if (prods.error ==="") {
             setProducts(prods.result.data);
             setTotalPages(prods.result.pages);
             setActivePage(prods.result.page);
         };
     };
+
+    useEffect(() => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            setActiveSearch(headerSearch);
+        }, 2000);
+    }, [headerSearch]);
 
     useEffect(() => {
 
@@ -53,12 +61,7 @@ export default () => {
         getCategories();
     }, []);
 
-    useEffect(() => {
-        clearTimeout(searchTimer);
-        searchTimer = setTimeout(() => {
-            setActiveSearch(headerSearch);
-        }, 2000);
-    }, [headerSearch]);
+  
 
     useEffect(() => {
         setProducts([]);
