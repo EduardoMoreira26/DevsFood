@@ -17,6 +17,7 @@ import ProductItem from "../../components/ProductItem";
 
 import api from '../../api';
 
+let searchTimer = null;
 
 export default () => {
     const history = useHistory();
@@ -27,6 +28,7 @@ export default () => {
 
     const [activeCategory, setActiveCategory] = useState(0);
     const [activePage, setActivePage] = useState(0);
+    const [activeSearch, setActiveSearch] = useState("");
 
     const getProducts = async () => {
         const prods = await api.getProducts();
@@ -52,8 +54,16 @@ export default () => {
     }, []);
 
     useEffect(() => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            setActiveSearch(headerSearch);
+        }, 2000);
+    }, [headerSearch]);
+
+    useEffect(() => {
+        setProducts([]);
         getProducts();
-    }, [activeCategory])
+    }, [activeCategory, activePage, activeSearch]);
    
 
     return (
@@ -105,7 +115,12 @@ export default () => {
             {totalPages > 0 &&
                 <ProductPaginationArea>
                     {Array(totalPages).fill(0).map((item, index) => (
-                        <ProductPaginationItem key={index}>
+                        <ProductPaginationItem 
+                            key={index} 
+                            active={activePage}
+                            current={index + 1}
+                            onClick={() => setActivePage(index + 1)}
+                        >
                             {index +1}
                         </ProductPaginationItem>
                     ))}
