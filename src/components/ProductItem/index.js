@@ -13,11 +13,14 @@ import {
 } from "./styled"
 
 
-export default ({ data }) => {
+export default ({ data, onClick }) => {
 
+  const handleClick = () => {
+    onClick(data);
+  }
 
   return (
-   <Container>
+   <Container onClick={handleClick}>
 
     <ProductPhotoArea>
       <ProdcutPhoto src={data.image} />
