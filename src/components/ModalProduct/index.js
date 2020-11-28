@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { 
   Container,
@@ -17,9 +17,26 @@ import {
   ProductPrice
 } from "./styled"
 
-export default ({ data }) => {
+export default ({ data, setStatus }) => {
+  const [qt, setQt] = useState(1);
+
+  useEffect(() => {
+    setQt(1);
+  }, [data])
   
-  
+  const handleCancelButton = () => {
+    setStatus(false);
+  }
+
+  const hanldeMinusQt = () => {
+    if (qt > 1) {
+      setQt(qt - 1);
+    }
+  }
+
+  const hanldePlusQt = () => {
+    setQt(qt + 1);
+  }
 
   return (
     <Container>
@@ -33,19 +50,25 @@ export default ({ data }) => {
           </ProductDetails>
           <ProductQuantityArea>
             <ProductQuantity>
-              <ProductQtImage src="/assets/minus.png" />
-              <ProductQtText>900</ProductQtText>
-              <ProductQtImage src="/assets/plus.png" />
+              <ProductQtImage 
+                onClick={hanldeMinusQt} 
+                src="/assets/minus.png" 
+              />
+              <ProductQtText>{qt}</ProductQtText>
+              <ProductQtImage 
+                onClick={hanldePlusQt} 
+                src="/assets/plus.png" 
+              />
             </ProductQuantity>
             <ProductPrice>
-              R$ {data.price}
+            € {(data.price * qt).toFixed(2)}
             </ProductPrice>
           </ProductQuantityArea>
         </ProductInfoArea>
       </ProductArea>
 
       <ProductButtons>
-        <ProductButton small={true}>Cancelar</ProductButton>
+        <ProductButton small={true} onClick={handleCancelButton}>Cancelar</ProductButton>
         <ProductButton>Adicionar ao carrinho</ProductButton>
       </ProductButtons>
     </Container> 

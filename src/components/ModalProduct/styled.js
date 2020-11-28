@@ -74,6 +74,7 @@ export const ProductQtImage = styled.img`
   width: 24px;
   height: auto;
   margin: 0 10px;
+  cursor: pointer;
 
 `;
 
