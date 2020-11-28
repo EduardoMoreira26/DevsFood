@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
 import { 
   Container,
@@ -18,6 +19,8 @@ import {
 } from "./styled"
 
 export default ({ data, setStatus }) => {
+  const dispath = useDispatch();
+
   const [qt, setQt] = useState(1);
 
   useEffect(() => {
@@ -36,6 +39,17 @@ export default ({ data, setStatus }) => {
 
   const hanldePlusQt = () => {
     setQt(qt + 1);
+  }
+
+  const handleAddToCart = () => {
+    //juntar as infos
+    //mandar pro reducer
+    dispath({
+      type: 'ADD_PRODUCT',
+      payload:{data, qt}
+    });
+
+    setStatus(false);
   }
 
   return (
@@ -69,7 +83,7 @@ export default ({ data, setStatus }) => {
 
       <ProductButtons>
         <ProductButton small={true} onClick={handleCancelButton}>Cancelar</ProductButton>
-        <ProductButton>Adicionar ao carrinho</ProductButton>
+        <ProductButton onClick={handleAddToCart}>Adicionar ao carrinho</ProductButton>
       </ProductButtons>
     </Container> 
 
